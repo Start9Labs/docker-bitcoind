@@ -1,9 +1,9 @@
 FROM alpine
 
 ARG VERSION=0.18.1
-ARG GLIBC_VERSION=2.29-r0
+ARG GLIBC_VERSION=2.22-r8
 
-ENV FILENAME bitcoin-${VERSION}-arm-linux-gnuabihf.tar.gz
+ENV FILENAME bitcoin-${VERSION}-arm-linux-gnueabihf.tar.gz
 ENV DOWNLOAD_URL https://bitcoin.org/bin/bitcoin-core-${VERSION}/${FILENAME}
 
 # Some of this was unabashadly yanked from
@@ -11,19 +11,18 @@ ENV DOWNLOAD_URL https://bitcoin.org/bin/bitcoin-core-${VERSION}/${FILENAME}
 
 RUN apk update \
   && apk --no-cache add wget tar bash ca-certificates \
-  && wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub \
-  && wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk \
-  && wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-bin-${GLIBC_VERSION}.apk \
-  && apk --no-cache add glibc-${GLIBC_VERSION}.apk \
-  && apk --no-cache add glibc-bin-${GLIBC_VERSION}.apk \
+  && wget https://github.com/armhf-docker-library/alpine-pkg-glibc/releases/download/2.22/glibc-${GLIBC_VERSION}.apk \
+  && wget https://github.com/armhf-docker-library/alpine-pkg-glibc/releases/download/2.22/glibc-bin-${GLIBC_VERSION}.apk \
+  && apk --no-cache --allow-untrusted add glibc-${GLIBC_VERSION}.apk \
+  && apk --no-cache --allow-untrusted add glibc-bin-${GLIBC_VERSION}.apk \
   && rm -rf /glibc-${GLIBC_VERSION}.apk \
   && rm -rf /glibc-bin-${GLIBC_VERSION}.apk \
   && wget $DOWNLOAD_URL \
-  && tar xzvf /bitcoin-${VERSION}-x86_64-linux-gnu.tar.gz \
+  && tar xzvf /bitcoin-${VERSION}-arm-linux-gnueabihf.tar.gz \
   && mkdir /root/.bitcoin \
   && mv /bitcoin-${VERSION}/bin/* /usr/local/bin/ \
   && rm -rf /bitcoin-${VERSION}/ \
-  && rm -rf /bitcoin-${VERSION}-x86_64-linux-gnu.tar.gz \
+  && rm -rf /bitcoin-${VERSION}-arm-linux-gnueabihf.tar.gz \
   && apk del tar wget ca-certificates
 
 EXPOSE 8332 8333 18332 18333 28332 28333

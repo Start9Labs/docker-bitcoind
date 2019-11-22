@@ -10,5 +10,7 @@ HOST_IP=$(ip -4 route list match 0/0 | awk '{print $3}')
 
 # If config doesn't exist, initialize with sane defaults for running a
 # non-mining node.
+/root/tera -f /root/.bitcoin/bitcoin.conf.template --yaml /root/config.yaml
+echo "HOST IP: ${HOST_IP}"
 
-exec bitcoind -datadir=${BITCOIN_DIR} -conf=${BITCOIN_CONF} -proxy=$HOST_IP:9050 -onion=$HOST_IP:9050 -torcontrol=$HOST_IP:9051 -listenonion
+exec bitcoind -datadir=${BITCOIN_DIR} -proxy=${HOST_IP}:9050 -externalip=${TOR_ADDRESS} -conf=${BITCOIN_CONF}

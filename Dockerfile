@@ -24,9 +24,9 @@ RUN apk update \
   && rm -rf /bitcoin-${VERSION}/ \
   && rm -rf /bitcoin-${VERSION}-arm-linux-gnueabihf.tar.gz \
   && apk del tar wget ca-certificates \
-  && wget https://registry.start9labs.com/sys/tera \
-  && mv tera /root/tera \
-  && chmod +x /root/tera
+  && wget https://registry.start9labs.com/sys/tmpl-musl \
+  && mv tmpl-musl /root/tmpl \
+  && chmod +x /root/tmpl
 
 EXPOSE 8332 8333 18332 18333 28332 28333
 

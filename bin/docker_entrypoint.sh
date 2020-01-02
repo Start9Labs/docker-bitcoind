@@ -12,5 +12,6 @@ HOST_IP=$(ip -4 route list match 0/0 | awk '{print $3}')
 # non-mining node.
 /root/tmpl /root/config.yaml < ${BITCOIN_DIR}/bitcoin.conf.template > ${BITCOIN_CONF}
 echo "HOST IP: ${HOST_IP}"
+echo "server = ${HOST_IP}" > /etc/torsocks.conf
 
-exec bitcoind -datadir=${BITCOIN_DIR} -proxy=${HOST_IP}:9050 -externalip=${TOR_ADDRESS} -conf=${BITCOIN_CONF}
+exec torsocks bitcoind -datadir=${BITCOIN_DIR} -externalip=${TOR_ADDRESS} -conf=${BITCOIN_CONF}

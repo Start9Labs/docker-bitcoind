@@ -14,4 +14,4 @@ HOST_IP=$(ip -4 route list match 0/0 | awk '{print $3}')
 echo "HOST IP: ${HOST_IP}"
 echo "server = ${HOST_IP}" > /etc/torsocks.conf
 
-exec torsocks bitcoind -datadir=${BITCOIN_DIR} -externalip=${TOR_ADDRESS} -conf=${BITCOIN_CONF}
+exec bitcoind -proxy="${HOST_IP}:9050" -onion="${HOST_IP}:9050" -externalip="${TOR_ADDRESS}" -datadir=${BITCOIN_DIR} -conf=${BITCOIN_CONF}

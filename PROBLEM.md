@@ -22,3 +22,4 @@ rpcallowip=0.0.0.0/0
 ```
 bitcoind -proxy="${HOST_IP}:9050" -onion="${HOST_IP}:9050" -externalip="${TOR_ADDRESS}" -datadir=${BITCOIN_DIR} -conf=${BITCOIN_CONF}
 ```
+  * the rpc server is working correctly at the hidden service url (when externalip is removed)

@@ -10,7 +10,7 @@ ENV DOWNLOAD_URL https://bitcoin.org/bin/bitcoin-core-${VERSION}/${FILENAME}
 # https://github.com/szyhf/DIDockerfiles/blob/master/bitcoin/alpine/Dockerfile
 
 RUN apk update \
-  && apk --no-cache add wget tar bash ca-certificates torsocks \
+  && apk --no-cache add wget tar bash ca-certificates \
   && wget https://github.com/armhf-docker-library/alpine-pkg-glibc/releases/download/2.22/glibc-${GLIBC_VERSION}.apk \
   && wget https://github.com/armhf-docker-library/alpine-pkg-glibc/releases/download/2.22/glibc-bin-${GLIBC_VERSION}.apk \
   && apk --no-cache --allow-untrusted add glibc-${GLIBC_VERSION}.apk \
